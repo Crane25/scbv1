@@ -165,6 +165,8 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             if ($data) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -193,6 +195,8 @@
             curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); //waiting connection timeout in seconds
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             if (!empty($data)) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -328,8 +332,7 @@
         }
         
         public function getBalance()
-        {
-            
+        {           
             // $accessToken = file_get_contents("scb-access-token.txt");
             $accessToken = file_get_contents($this->fileToken);
             $ch = curl_init();
@@ -337,6 +340,8 @@
             curl_setopt($ch, CURLOPT_URL, "{$this->apiUrl}/v2/deposits/casa/details");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -368,6 +373,8 @@
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"groupName\":\"".$groupName."\"}");
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -401,6 +408,8 @@
             
             curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"groupId\":\"".$groupId."\"}");
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -435,6 +444,8 @@
             $headers[] = 'Accept-Language: th';
             $headers[] = 'Content-Type: application/json';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $result = json_decode(curl_exec($ch), true);
             if (curl_errno($ch)) {
@@ -459,6 +470,9 @@
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"groupId\":\"".$groupId."\",\"recipientList\":[{\"bankCode\":\"".$bankCode."\",\"subFunction\":\"".$transferType."\",\"accountTo\":\"".$ToBank."\",\"nickname\":\"s01\",\"amount\":".$amount."}]}");
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -488,7 +502,12 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v1/bulktransferprofiles/group/recipient?groupId='.$groupId);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');        
+            
+            
+            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -518,6 +537,9 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v1/transfer/bulk/verification');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, 1);
+
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             if($ToBankCode == 'SCB')
             {
@@ -560,6 +582,9 @@
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"transactionToken\":\"".$transactionToken."\"}");
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
             
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -654,6 +679,8 @@
             curl_setopt($ch, CURLOPT_URL, "{$this->apiUrl}/v7/payments/bill/scan");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);  
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -684,6 +711,8 @@
             curl_setopt($ch, CURLOPT_URL, "{$this->apiUrl}/v2/deposits/casa/transactions");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
@@ -771,6 +800,8 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v2/transfer/verification');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             if (is_numeric($bank)) {
                 $bankCode = $bank;
@@ -831,6 +862,8 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v2/transfer/verification');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $bankCode = $this->bankCode($bank);
             $transferType = $bank == 'SCB' ? '3RD' : 'ORFT';
@@ -857,6 +890,8 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v2/transfer/verification');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $bankCode = $this->bankCode($bank);
             $transferType = $bank == 'SCB' ? '3RD' : 'ORFT';
@@ -987,6 +1022,8 @@
             curl_setopt($ch, CURLOPT_URL, 'https://fasteasy.scbeasy.com:8443/v2/topup/billers/8/additionalinfo');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxys);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->username);
 
             $headers = array();
             $headers[] = "Api-Auth: $accessToken";
